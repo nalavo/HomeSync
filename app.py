@@ -859,13 +859,8 @@ if __name__ == '__main__':
     
     print(f"Starting HomeSync API server on {host}:{port}")
     
-    # Start scheduled tasks in a separate thread only if not in debug mode
-    # In debug mode, Flask restarts frequently which causes issues with background threads
-    if not debug:
-        scheduler_thread = threading.Thread(target=run_scheduled_tasks, daemon=True)
-        scheduler_thread.start()
-        print("Scheduled tasks started for notifications and rotations")
-    else:
-        print("Scheduled tasks disabled in debug mode")
+    # Disable scheduled tasks for Railway deployment to prevent crashes
+    # Railway doesn't handle background threads well
+    print("Scheduled tasks disabled for Railway deployment stability")
     
     app.run(host=host, port=port, debug=debug)
